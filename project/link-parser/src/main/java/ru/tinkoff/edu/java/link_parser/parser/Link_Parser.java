@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.java.link_parser;
+package ru.tinkoff.edu.java.link_parser.parser;
 
 import ru.tinkoff.edu.java.link_parser.parser.Abstract;
 import ru.tinkoff.edu.java.link_parser.parser.Github;
@@ -12,6 +12,5 @@ public class Link_Parser {
 
         return parser2.parser_Link(url);
     }
-
 
 }
