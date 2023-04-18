@@ -9,6 +9,7 @@ import ru.tinkoff.edu.java.scrapper.schedule.Scheduler;
 @Validated
 @ConfigurationProperties(prefix = "app", ignoreUnknownFields = false)
 public record ApplicationConfig(@NotNull String test) {
+	
 	 @Bean
 	    public long schedulerIntervalMs(ApplicationConfig config) {
 	        return config.scheduler().interval().toMillis();

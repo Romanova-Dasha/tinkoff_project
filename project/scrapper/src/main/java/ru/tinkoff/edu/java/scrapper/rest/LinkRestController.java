@@ -7,7 +7,8 @@ import ru.tinkoff.edu.java.scrapper.dto.ListLinkResponse;
 import ru.tinkoff.edu.java.scrapper.dto.RemoveLinkRequest;
 import ru.tinkoff.edu.java.scrapper.model.Link;
 import ru.tinkoff.edu.java.scrapper.service.LinkService;
-
+import ru.tinkoff.edu.java.scrapper.exception.LinkNotFoundException;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -35,7 +36,8 @@ public class LinkRestController {
 
     @DeleteMapping
     public LinkResponse deleteLink(@RequestHeader("Tg-Chat-Id") Long chatId, @RequestBody RemoveLinkRequest request) {
-        Link link = linkService.deleteLink(chatId, request);
+        Link link = subscriptionService.remove(chatId, URI.create(request.link()));
+        if (link == null) throw new LinkNotFoundException("Ссылка с таким url не отслеживается!");
         return new LinkResponse(link.getId(), link.getUrl());
     }
 

@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.tinkoff.edu.java.scrapper.client.GitHubClient;
 import ru.tinkoff.edu.java.scrapper.client.StackOverflowClient;
+import org.springframework.web.reactive.function.client.WebClient;
+import ru.tinkoff.edu.java.scrapper.client.BotClient;
 
 @Configuration
 public class ClientConfiguration {
@@ -14,6 +16,9 @@ public class ClientConfiguration {
 
     @Value("${so.baseurl}")
     private String stackOverflowBaseUrl;
+    
+    @Value("${bot.baseurl}")
+    private String botBaseUrl;
 
 
     //Регистрируем клиентов как бины
@@ -25,6 +30,23 @@ public class ClientConfiguration {
     @Bean
     public StackOverflowClient stackOverflowClientService() {
         return new StackOverflowClient(stackOverflowBaseUrl);
+    }
+    @Bean
+    public BotClient botClient(){return new BotClient(botBaseUrl);}
+
+    @Bean
+    public WebClient botWebClient(){
+        return WebClient.create(botBaseUrl);
+    }
+
+    @Bean
+    public WebClient ghWebClient(){
+        return WebClient.create(gitHubBaseUrl);
+    }
+
+    @Bean
+    public WebClient soWebClient(){
+        return WebClient.create(stackOverflowBaseUrl);
     }
 
 }
