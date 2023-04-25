@@ -14,4 +14,7 @@ public record ApplicationConfig(@NotNull String test) {
 	    public long schedulerIntervalMs(ApplicationConfig config) {
 	        return config.scheduler().interval().toMillis();
 	    }
+	 public enum AccessType {
+	        JDBC, JPA, JOOQ
+	    }
 }
