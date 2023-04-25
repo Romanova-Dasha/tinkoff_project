@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import ru.tinkoff.edu.java.scrapper.configuration.ApplicationConfig;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import ru.tinkoff.edu.java.scrapper.model.Relation;
-import ru.tinkoff.edu.java.scrapper.repository.SubscriptionJdbcTemplateRepository;
+import ru.tinkoff.edu.java.scrapper.repository.jdbc.SubscriptionJdbcTemplateRepository;
 
 @SpringBootApplication
 @EnableConfigurationProperties(ApplicationConfig.class)

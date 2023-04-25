@@ -18,7 +18,6 @@ public class ChatRestController {
 
     @PostMapping(value = "{id}")
     public void registerChat(@PathVariable Long id, @RequestBody UserAddDto userAddDto) {
-        System.out.println("Пришлё запрос на регистрацию чата "+userAddDto);
         chatService.register(new User(id, userAddDto.username(), userAddDto.firstName(), userAddDto.lastName()));
     }
 

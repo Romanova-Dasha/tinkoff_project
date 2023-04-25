@@ -5,6 +5,21 @@ import java.time.OffsetDateTime;
 
 public record GitHubResponse(@JsonProperty("pushed") OffsetDateTime pushedAt,
                              @JsonProperty("updated") OffsetDateTime updatedAt,
-                             @JsonProperty("full_name") String fullName) {
+                             @JsonProperty("full_name") String fullName,
+							 @JsonProperty("description") String description,
+							 @JsonProperty("forks_count") int forksCount
+) {
+
+
+@Override
+public String toString() {
+	return "GitHubResponse{" +
+		"pushedAt=" + pushedAt +
+		", updatedAt=" + updatedAt +
+		", fullName='" + fullName + '\'' +
+		", description='" + description + '\'' +
+		", forksCount=" + forksCount +
+		'}';
+}
 
 }
