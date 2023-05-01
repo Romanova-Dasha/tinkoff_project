@@ -5,11 +5,8 @@ import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 import ru.tinkoff.edu.java.scrapper.model.commonDto.Link;
 import ru.tinkoff.edu.java.scrapper.repository.jdbcAndJooqContract.LinkRepository;
-
 import java.sql.Timestamp;
 import java.util.List;
-
-
 import static ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Link.*;
 
 @Slf4j
@@ -79,7 +76,8 @@ public class LinkJooqRepository implements LinkRepository {
     public void updateGhLink(Link link) {
         log.info("updateGhLink() method invocation in linkJooqRepo");
         dslContext.update(LINK)
-                .set(LINK.GH_FORKS_COUNT, link.getGhForksCount())
+        		.set(LINK.CHECKED_AT, link.getCheckedAt().toLocalDateTime())
+        		.set(LINK.GH_FORKS_COUNT, link.getGhForksCount())
                 .set(LINK.GH_DESCRIPTION, link.getGhDescription())
                 .set(LINK.GH_PUSHED_AT, link.getGhPushedAt().toLocalDateTime())
                 .where(LINK.ID.eq(link.getId()))
@@ -90,6 +88,7 @@ public class LinkJooqRepository implements LinkRepository {
     public void updateSoLink(Link link) {
         log.info("updateSoLink() method invocation in linkJooqRepo");
         dslContext.update(LINK)
+        		.set(LINK.CHECKED_AT, link.getCheckedAt().toLocalDateTime())
                 .set(LINK.SO_LAST_EDIT_DATE, link.getSoLastEditDate().toLocalDateTime())
                 .set(LINK.SO_ANSWER_COUNT, link.getSoAnswerCount())
                 .where(LINK.ID.eq(link.getId()))

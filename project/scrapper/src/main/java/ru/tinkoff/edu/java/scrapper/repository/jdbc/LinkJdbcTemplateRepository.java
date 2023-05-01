@@ -4,13 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ru.tinkoff.edu.java.scrapper.mapper.LinkRowMapper;
-import ru.tinkoff.edu.java.scrapper.model.Link;
+import ru.tinkoff.edu.java.scrapper.model.commonDto.Link;
 import ru.tinkoff.edu.java.scrapper.repository.LinkRepository;
 
 import java.sql.Timestamp;
 import java.util.List;
 
-@Repository
 @Slf4j
 public class LinkJdbcTemplateRepository implements LinkRepository {
 
