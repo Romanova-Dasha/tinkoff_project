@@ -57,17 +57,15 @@ public class LinkUpdateServiceImpl implements LinkUpdateService {
 
     @Override
     public List<Link> getOldLinks() {
-        log.info("getOldLinks() method invocation in LinkUpdateServiceImpl");
         return linkRepository.findOldLinks(timeUpdateDeltaInSeconds);
     }
 
 
     public void updateLinks() {
-        log.info("updateLinks() method invocation in LinkUpdateServiceImpl");
         List<Link> oldLinks = getOldLinks();
 
         for (Link link : oldLinks) {
-            ParseResult result = linkParser.parseUrl(link.getUrl());
+            Parser_Link result = linkParser.parseUrl(link.getUrl());
             if (result instanceof GitHub_Link) {
                 try {
                     boolean isUpdated = false;
@@ -105,7 +103,6 @@ public class LinkUpdateServiceImpl implements LinkUpdateService {
                     linkRepository.updateCheckDate(link);
 
                     if (isUpdated) {
-                        linkRepository.updateGhLink(link);
                         Long[] chats = subscriptionRepository.findChatsByLink(link.getId()).stream().map(Relation::getChatId).toArray(Long[]::new);
                         botClient.updateLink(new LinkUpdate(link.getId(), link.getUrl(), "Вышли обновления в репозитории:\n"+updateDescription, chats));
                     }
@@ -145,7 +142,7 @@ public class LinkUpdateServiceImpl implements LinkUpdateService {
                     linkRepository.updateCheckDate(link);
 
                     if (isUpdated) {
-                        linkRepository.updateSoLink(link);
+                       
                         Long[] chats = subscriptionRepository.findChatsByLink(link.getId()).stream().map(Relation::getChatId).toArray(Long[]::new);
                         botClient.updateLink(new LinkUpdate(link.getId(), link.getUrl(), "Вышли обновления в вопросе:\n"+updateDescription, chats));
                     }

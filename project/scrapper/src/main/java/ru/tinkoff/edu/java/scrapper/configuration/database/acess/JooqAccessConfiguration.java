@@ -15,14 +15,13 @@ import ru.tinkoff.edu.java.scrapper.repository.jdbcAndJooqContract.UserRepositor
 import ru.tinkoff.edu.java.scrapper.repository.jooq.LinkJooqRepository;
 import ru.tinkoff.edu.java.scrapper.repository.jooq.SubscriptionJooqRepository;
 import ru.tinkoff.edu.java.scrapper.repository.jooq.UserJooqRepository;
+import ru.tinkoff.edu.java.scrapper.service.UpdateNotificationService;
 import ru.tinkoff.edu.java.scrapper.service.contract.LinkUpdateService;
 import ru.tinkoff.edu.java.scrapper.service.contract.SubscriptionService;
 import ru.tinkoff.edu.java.scrapper.service.contract.TgChatService;
 import ru.tinkoff.edu.java.scrapper.service.jdbcAndJooq.impl.LinkUpdateServiceImpl;
 import ru.tinkoff.edu.java.scrapper.service.jdbcAndJooq.impl.SubscriptionServiceImpl;
 import ru.tinkoff.edu.java.scrapper.service.jdbcAndJooq.impl.TgChatServiceImpl;
-
-
 @Configuration
 @ConditionalOnProperty(prefix = "app", name = "database-access-type", havingValue = "jooq")
 public class JooqAccessConfiguration {

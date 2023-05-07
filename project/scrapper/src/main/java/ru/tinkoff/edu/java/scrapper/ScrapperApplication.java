@@ -17,5 +17,6 @@ import ru.tinkoff.edu.java.scrapper.service.jpa.impl.JpaTgChatServiceImpl;
 public class ScrapperApplication {
     public static void main(String[] args) {
         var ctx = SpringApplication.run(ScrapperApplication.class, args);
+        ApplicationConfig config = ctx.getBean(ApplicationConfig.class);
     }
 }

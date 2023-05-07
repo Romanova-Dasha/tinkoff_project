@@ -32,14 +32,6 @@ public class ClientConfiguration {
         return new StackOverflowClient(stackOverflowBaseUrl);
     }
     @Bean
-    public BotClient botClient(){return new BotClient(botBaseUrl);}
-
-    @Bean
-    public WebClient botWebClient(){
-        return WebClient.create(botBaseUrl);
-    }
-
-    @Bean
     public WebClient ghWebClient(){
         return WebClient.create(gitHubBaseUrl);
     }

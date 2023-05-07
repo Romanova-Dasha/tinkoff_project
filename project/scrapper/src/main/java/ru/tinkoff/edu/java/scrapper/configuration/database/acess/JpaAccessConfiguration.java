@@ -11,6 +11,7 @@ import ru.tinkoff.edu.java.scrapper.repository.jdbcAndJooqContract.SubscriptionR
 import ru.tinkoff.edu.java.scrapper.repository.jdbcAndJooqContract.UserRepository;
 import ru.tinkoff.edu.java.scrapper.repository.jpa.JpaLinkRepository;
 import ru.tinkoff.edu.java.scrapper.repository.jpa.JpaUserRepository;
+import ru.tinkoff.edu.java.scrapper.service.UpdateNotificationService;
 import ru.tinkoff.edu.java.scrapper.service.contract.LinkUpdateService;
 import ru.tinkoff.edu.java.scrapper.service.contract.SubscriptionService;
 import ru.tinkoff.edu.java.scrapper.service.contract.TgChatService;
@@ -26,7 +27,7 @@ public class JpaAccessConfiguration {
     @Bean
     public LinkUpdateService linkUpdateService(
             JpaLinkRepository linkRepository,
-            LinkParser linkParser,
+            Link_Parser linkParser,
             GitHubClient gitHubClient,
             StackOverflowClient stackOverflowClient,
             BotClient botClient) {
