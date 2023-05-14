@@ -11,7 +11,7 @@ import ru.tinkoff.edu.java.bot.dto.AddLinkRequest;
 @Component
 public class TrackCommand implements Command {	
 
-    private final LinkParser parser;
+    private final Link_Parser parser;
 
     public TrackCommand(ScrapperClient scrapperClient, LinkParser parser) {
         this.scrapperClient = scrapperClient;

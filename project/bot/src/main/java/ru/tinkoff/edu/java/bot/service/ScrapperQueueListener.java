@@ -10,11 +10,9 @@ import ru.tinkoff.edu.java.bot.dto.LinkUpdate;
 @Slf4j
 public class ScrapperQueueListener {
 
-
     private final AmqpTemplate rabbitTemplate;
 
     private final UpdateService updateService;
-
 
     public ScrapperQueueListener(AmqpTemplate rabbitTemplate, UpdateService updateService) {
         this.rabbitTemplate = rabbitTemplate;
@@ -23,10 +21,9 @@ public class ScrapperQueueListener {
 
     @RabbitHandler
     public void receiver(LinkUpdate update) {
-        log.info("Сообщение об обновлении получено: "+update);
+        log.info("Сообщение об обновлении получено: " + update);
 //        throw new RuntimeException("test exception");
         updateService.updateLink(update);
     }
-
 
 }

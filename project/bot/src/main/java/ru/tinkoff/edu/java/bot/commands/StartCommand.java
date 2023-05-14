@@ -23,10 +23,8 @@ public class StartCommand implements Command {
         this.scrapperClient = scrapperClient;
     }
 
-
     @Value("${tg.bot.token}")
     private String token;
-
 
     @Override
     public String command() {
@@ -42,14 +40,16 @@ public class StartCommand implements Command {
     public String handle(Update update) {
         long chatId = update.message().chat().id();
         try {
-            UserAddDto userAddDto = new UserAddDto(update.message().chat().username(), update.message().chat().firstName(), update.message().chat().lastName());
+            UserAddDto userAddDto = new UserAddDto(update.message().chat().username(),
+                update.message().chat().firstName(),
+                update.message().chat().lastName()
+            );
             scrapperClient.registerChat(chatId, userAddDto);
             return "Привет! Рад познакомиться, " + update.message().chat().firstName();
         } catch (ScrapperClientException e) {
 
             return e.getMessage();
         }
-
 
     }
 }

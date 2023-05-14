@@ -12,7 +12,6 @@ import ru.tinkoff.edu.java.bot.service.UpdateServiceImpl;
 @Slf4j
 public class BotRestController {
 
-
     private final UpdateService updateService;
 
 

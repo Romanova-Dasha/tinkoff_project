@@ -2,13 +2,14 @@ package ru.tinkoff.edu.java.bot.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import parser.LinkParser;
+import ru.tinkoff.edu.java.link_parser.parser.Link_Parser;
+
 
 @Configuration
 public class LinkParserConfiguration {
 
     @Bean
-    public LinkParser linkParser(){
-        return new LinkParser();
+    public Link_Parser linkParser(){
+        return new Link_Parser();
     }
 }

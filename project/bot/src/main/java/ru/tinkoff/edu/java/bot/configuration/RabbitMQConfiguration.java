@@ -26,11 +26,10 @@ public class RabbitMQConfiguration {
     @Bean
     Queue queue() {
         return QueueBuilder.durable(config.queueName())
-                .withArgument("x-dead-letter-exchange", config.exchangeName())
-                .withArgument("x-dead-letter-routing-key", config.routingKey() + ".dlq")
-                .build();
+            .withArgument("x-dead-letter-exchange", config.exchangeName())
+            .withArgument("x-dead-letter-routing-key", config.routingKey() + ".dlq")
+            .build();
     }
-
 
     @Bean
     Queue deadLetterQueue() {
@@ -70,11 +69,9 @@ public class RabbitMQConfiguration {
         return jsonConverter;
     }
 
-
     @Bean
     public ScrapperQueueListener scrapperQueueListener(AmqpTemplate rabbitTemplate, UpdateService updateService) {
         return new ScrapperQueueListener(rabbitTemplate, updateService);
     }
-
 
 }

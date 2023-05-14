@@ -13,7 +13,7 @@ public class HelpCommand implements Command{
 
     @Override
     public String description() {
-        return "ввывести окно с командами";
+        return "вывести окно с командами";
     }
 
     @Override
