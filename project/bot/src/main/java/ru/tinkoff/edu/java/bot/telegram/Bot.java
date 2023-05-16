@@ -10,12 +10,16 @@ import ru.tinkoff.edu.java.bot.commands.Command;
 import ru.tinkoff.edu.java.bot.commands.CommandsEnum;
 
 import java.util.EnumMap;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.Metrics;
 
 @Slf4j
 public class Bot implements AutoCloseable {
 
     private final TelegramBot bot;
     private final UserMessageProcessor userMessageProcessor;
+
+    Counter messagesCounter = Metrics.counter("processed_messages", "application", "bot");
 
     @PostConstruct
     public void init() {
@@ -34,6 +38,7 @@ public class Bot implements AutoCloseable {
             for (Update update : updates) {
                 if (update.message() != null) {
                     bot.execute(new SendMessage(update.message().chat().id(), userMessageProcessor.process(update)));
+                    messagesCounter.increment();
                 }
 
             }

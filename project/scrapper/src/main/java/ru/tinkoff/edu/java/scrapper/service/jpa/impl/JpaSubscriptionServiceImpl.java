@@ -30,11 +30,11 @@ public class JpaSubscriptionServiceImpl implements SubscriptionService {
         this.userRepository = userRepository;
     }
 
-
     @Override
     @Transactional
     public Link subscribe(Long chatId, URI url) {
-        log.info("subscribe() method invocation in JpaSubscriptionServiceImpl. chatId = "+chatId+" url = "+url.toString());
+        log.info("subscribe() method invocation in JpaSubscriptionServiceImpl. chatId = " + chatId
+            + " url = " + url.toString());
         Optional<LinkEntity> optionalLink = linkRepository.findByUrl(url.toString());
         LinkEntity linkToAdd = new LinkEntity();
         if (optionalLink.isEmpty()) {
@@ -46,7 +46,9 @@ public class JpaSubscriptionServiceImpl implements SubscriptionService {
         linkRepository.save(linkToAdd);
 
         Optional<UserEntity> optionalUser = userRepository.findById(chatId);
-        if (optionalUser.isEmpty()) throw new ChatNotFoundException("Такой чат не зарегистрирован!");
+        if (optionalUser.isEmpty()) {
+            throw new ChatNotFoundException("Такой чат не зарегистрирован!");
+        }
         UserEntity user = optionalUser.get();
         List<LinkEntity> userLinks = user.getLinks();
 
@@ -61,19 +63,22 @@ public class JpaSubscriptionServiceImpl implements SubscriptionService {
     @Override
     @Transactional
     public Link unsubscribe(Long chatId, URI url) {
-        log.info("unsubscribe() method invocation in JpaSubscriptionServiceImpl. chatId = "+chatId+" url = "+url.toString());
+        log.info("unsubscribe() method invocation in JpaSubscriptionServiceImpl. chatId = " + chatId
+            + " url = " + url.toString());
         Optional<UserEntity> optionalUser = userRepository.findByChatIdWithLinks(chatId);
         Optional<LinkEntity> optionalLink = linkRepository.findByUrl(url.toString());
 
-
-        if (optionalUser.isEmpty()) throw new ChatNotFoundException("Такой пользователь не зарегистрирован");
+        if (optionalUser.isEmpty()) {
+            throw new ChatNotFoundException("Такой пользователь не зарегистрирован");
+        }
 
         UserEntity user = optionalUser.get();
 
         List<LinkEntity> userLinks = user.getLinks();
 
-        if (optionalLink.isEmpty() || !userLinks.contains(optionalLink.get()))
+        if (optionalLink.isEmpty() || !userLinks.contains(optionalLink.get())) {
             throw new LinkNotFoundException("Такая ссылка не отслеживается");
+        }
 
         userLinks.remove(optionalLink.get());
         userRepository.save(user);
@@ -83,18 +88,21 @@ public class JpaSubscriptionServiceImpl implements SubscriptionService {
 
     @Override
     public List<Link> getLinksByChat(Long chatId) {
-        log.info("getAllByUser() method invocation in JpaSubscriptionServiceImpl. chatId = "+chatId);
+        log.info("getAllByUser() method invocation in JpaSubscriptionServiceImpl. chatId = " + chatId);
         Optional<UserEntity> optionalUser = userRepository.findById(chatId);
-        if (optionalUser.isEmpty()) throw new ChatNotFoundException("Такой чат не зарегистрирован!");
+        if (optionalUser.isEmpty()) {
+            throw new ChatNotFoundException("Такой чат не зарегистрирован!");
+        }
         return userRepository.findAllLinksByChat(chatId).stream().map(Link::fromEntity).toList();
     }
 
-
     @Override
     public List<Long> getChatIdsByLink(Long linkId) {
-        log.info("getChatIdsByLink() method invocation in JpaSubscriptionServiceImpl. linkId = "+linkId);
+        log.info("getChatIdsByLink() method invocation in JpaSubscriptionServiceImpl. linkId = " + linkId);
         Optional<LinkEntity> optionalLink = linkRepository.findById(linkId);
-        if (optionalLink.isEmpty()) throw new LinkNotFoundException("Такая ссылка не отслеживается");
+        if (optionalLink.isEmpty()) {
+            throw new LinkNotFoundException("Такая ссылка не отслеживается");
+        }
         return linkRepository.findChatIdsByLinkId(linkId);
     }
 }

@@ -24,20 +24,22 @@ public class JpaTgChatServiceImpl implements TgChatService {
 
     @Override
     public void register(User user) {
-        log.info("register() method invocation in JpaTgChatServiceImpl. User chatId = "+user.getChatId());
+        log.info("register() method invocation in JpaTgChatServiceImpl. User chatId = " + user.getChatId());
         Optional<UserEntity> optionalUser = userRepository.findById(user.getChatId());
-        if (optionalUser.isPresent()) throw new ChatAlreadyExistException("Такой чат уже зарегистрирован!");
+        if (optionalUser.isPresent()) {
+            throw new ChatAlreadyExistException("Такой чат уже зарегистрирован!");
+        }
         userRepository.save(User.toEntity(user));
     }
 
     @Override
     public void unregister(Long chatId) {
-        log.info("unregister() method invocation in JpaTgChatServiceImpl. User chatId = "+chatId);
+        log.info("unregister() method invocation in JpaTgChatServiceImpl. User chatId = " + chatId);
         Optional<UserEntity> optionalUser = userRepository.findById(chatId);
-        if (optionalUser.isEmpty()) throw new ChatNotFoundException("Такой чат не зарегистрирован!");
+        if (optionalUser.isEmpty()) {
+            throw new ChatNotFoundException("Такой чат не зарегистрирован!");
+        }
         userRepository.delete(optionalUser.get());
     }
-
-
 
 }

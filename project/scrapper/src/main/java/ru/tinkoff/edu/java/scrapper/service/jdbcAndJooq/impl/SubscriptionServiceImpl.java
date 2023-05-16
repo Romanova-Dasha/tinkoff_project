@@ -18,12 +18,9 @@ import java.util.List;
 @Slf4j
 public class SubscriptionServiceImpl implements SubscriptionService {
 
-
     private final LinkRepository linkRepository;
 
     private final SubscriptionRepository subscriptionRepository;
-
-
 
     public SubscriptionServiceImpl(LinkRepository linkRepository, SubscriptionRepository subscriptionRepository) {
         this.linkRepository = linkRepository;
@@ -33,7 +30,9 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     @Override
     @Transactional
     public Link subscribe(Long chatId, URI url) {
-        log.info("subscribe() method invocation in SubscriptionServiceImpl. chatId = "+chatId+" url = "+url.toString());
+        log.info("subscribe() method invocation in SubscriptionServiceImpl. chatId = "
+            + chatId
+            + " url = " + url.toString());
         Link link = linkRepository.findByUrl(url.toString());
         if (link == null) {
             link = new Link();
@@ -57,7 +56,8 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     @Override
     @Transactional
     public Link unsubscribe(Long chatId, URI url) {
-        log.info("unsubscribe() method invocation in SubscriptionServiceImpl. chatId = "+chatId+" url = "+url.toString());
+        log.info("unsubscribe() method invocation in SubscriptionServiceImpl. chatId = " + chatId
+            + " url = " + url.toString());
         Link link = linkRepository.findByUrl(url.toString());
 
         if (link != null) {
@@ -69,31 +69,13 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
     @Override
     public List<Link> getLinksByChat(Long chatId) {
-        log.info("getLinksByChat() method invocation in SubscriptionServiceImpl. chatId = "+chatId);
+        log.info("getLinksByChat() method invocation in SubscriptionServiceImpl. chatId = " + chatId);
         return subscriptionRepository.findLinksByChat(chatId);
     }
 
     @Override
     public List<Long> getChatIdsByLink(Long linkId) {
-        log.info("getChatIdsByLink() method invocation in SubscriptionServiceImpl. linkId = "+linkId);
+        log.info("getChatIdsByLink() method invocation in SubscriptionServiceImpl. linkId = " + linkId);
         return null;
     }
-
-	@Override
-	public Link add(Long chatId, URI url) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Link remove(Long chatId, URI url) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Link> getAllByUser(Long chatId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

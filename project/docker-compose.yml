@@ -22,21 +22,15 @@ services:
       - --changelog-file=master.xml
       - --driver=org.postgresql.Driver
       - --url=jdbc:postgresql://postgresql:5432/scrapper
-      - --username=romanova
-      - --password=12345654321
+      - --username=lwbeamer
+      - --password=2281337
       - update
     volumes:
       - ./migrations:/liquibase/changelog
     networks:
       - backend
 
-volumes:
-  link-service-data:
-
-networks:
-  backend:
-    name: backend
-    rabbit:
+  rabbit:
     image: rabbitmq:3-management
     hostname: rabbitmq
     container_name: rabbit
@@ -44,17 +38,53 @@ networks:
       - 15672:15672
       - 5672:5672
     environment:
-      - RABBITMQ_DEFAULT_USER=romanova
-      - RABBITMQ_DEFAULT_PASS=12345654321
+      - RABBITMQ_DEFAULT_USER=lwbeamer
+      - RABBITMQ_DEFAULT_PASS=2281337
     volumes:
       - rabbitmq-state:/var/lib/rabbitmq
     networks:
       - backend
 
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    networks:
+      - metrics
+
+  grafana:
+    image: grafana/grafana-oss
+    container_name: grafana
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    networks:
+      - metrics
+
 volumes:
   link-service-data:
   rabbitmq-state:
+  prometheus:
+  grafana:
 
 networks:
   backend:
     name: backend
+  metrics:
+    name: metrics

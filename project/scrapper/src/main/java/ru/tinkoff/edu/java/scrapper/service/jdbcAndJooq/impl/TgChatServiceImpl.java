@@ -17,7 +17,6 @@ public class TgChatServiceImpl implements TgChatService {
 
     private final SubscriptionRepository subscriptionRepository;
 
-
     public TgChatServiceImpl(UserRepository userRepository, SubscriptionRepository subscriptionRepository) {
         this.userRepository = userRepository;
         this.subscriptionRepository = subscriptionRepository;
@@ -25,16 +24,18 @@ public class TgChatServiceImpl implements TgChatService {
 
     @Override
     public void register(User user) {
-        log.info("register() method invocation in TgChatServiceImpl. chatId = "+user.getChatId());
+        log.info("register() method invocation in TgChatServiceImpl. chatId = " + user.getChatId());
         User userInBd = userRepository.findByChatId(user.getChatId());
-        if (userInBd != null) throw new ChatAlreadyExistException();
+        if (userInBd != null) {
+            throw new ChatAlreadyExistException();
+        }
         userRepository.add(user);
     }
 
     @Override
     @Transactional
     public void unregister(Long chatId) {
-        log.info("unregister() method invocation in TgChatServiceImpl. chatId = "+chatId);
+        log.info("unregister() method invocation in TgChatServiceImpl. chatId = " + chatId);
         userRepository.remove(chatId);
         subscriptionRepository.removeAllByUser(chatId);
     }
